@@ -1,0 +1,11 @@
+custom_api_integration:
+  path: '/page_json/{key}/{id}'
+  defaults:
+    _controller: 'Drupal\custom_api_integration\Controller\CustomApiController::apijson'
+    _title: 'API Homepage'
+    id: ''
+  requirements:
+    _permission: 'access content'
+
+
+
