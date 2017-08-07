@@ -24,15 +24,11 @@ class CustomApiController extends ControllerBase {
 				if(!empty($node)) {
 
 					$type_name = $node->type->entity->label();
-    					if(!empty($type_name) && $type_name =='Basic page') {            	
-							$entity_type = 'node';
-							$view_mode = 'json';
-							$view_builder = \Drupal::entityTypeManager()->getViewBuilder($entity_type);
-							$storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-							$node = $storage->load($id);
-							$build = $view_builder->view($node, $view_mode);
-							$output = render($build);
-						return new JsonResponse($build);
+    					if(!empty($type_name) && $type_name =='Basic page') {
+							$serializer = \Drupal::service('serializer');
+							$node = Node::load($id);
+							$data = $serializer->serialize($node, 'json');
+							return new JsonResponse($data);
 						}
 						else {
 							throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
